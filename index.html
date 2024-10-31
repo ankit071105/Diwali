@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Diwali Rocket Launch</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Festive&family=Montserrat:wght@500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #0a043c;
+      overflow: hidden;
+      font-family: 'Montserrat', sans-serif;
+      color: #fff;
+    }
+    .sky {
+      height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-align: center;
+    }
+    .rocket {
+      width: 80px;
+      height: 150px;
+      position: absolute;
+      bottom: 0;
+      animation: launch 3s ease-out forwards;
+    }
+    .rocket-body {
+      width: 50px;
+      height: 100px;
+      background-color: #ff6347;
+      border-radius: 50% 50% 0 0;
+      position: relative;
+      margin: auto;
+    }
+    .rocket-top {
+      width: 0;
+      height: 0;
+      border-left: 25px solid transparent;
+      border-right: 25px solid transparent;
+      border-bottom: 40px solid #ff6347;
+      position: absolute;
+      top: -40px;
+      left: 12.5px;
+    }
+    .trail {
+      width: 8px;
+      height: 15px;
+      background-color: orange;
+      position: absolute;
+      bottom: 10px;
+      left: 36px;
+      animation: trail 0.1s infinite alternate;
+    }
+    @keyframes trail {
+      from { opacity: 0.6; transform: scale(0.6); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes launch {
+      0% { bottom: 0; }
+      100% { bottom: 75%; }
+    }
+    .explosion {
+      display: none;
+      position: absolute;
+      color: gold;
+      text-align: center;
+      animation: explode 0.5s ease-out forwards;
+      transform: scale(1);
+      opacity: 0;
+    }
+    .sparkle {
+      font-size: 1.5rem;
+      position: absolute;
+      color: #ffecb3;
+      animation: sparkleAnimation 2s infinite alternate;
+      opacity: 0;
+    }
+    @keyframes sparkleAnimation {
+      0% { opacity: 0; transform: scale(1) translateY(0); }
+      100% { opacity: 1; transform: scale(1.2) translateY(-15px); }
+    }
+    @keyframes explode {
+      0% { opacity: 0; transform: scale(0); }
+      50% { opacity: 1; transform: scale(2); }
+      100% { opacity: 0; transform: scale(3); }
+    }
+    .diwali-message {
+      display: none;
+      font-size: 2.5rem;
+      font-family: 'Festive', cursive;
+      color: #ffd700;
+      margin-top: 20px;
+      text-shadow: 0 0 10px #ffecb3, 0 0 20px #ffecb3;
+      animation: fadeIn 1.5s ease forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .fireworks {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: yellow;
+      border-radius: 50%;
+      opacity: 0;
+      animation: fireworkAnimation 1.5s ease-out forwards;
+    }
+    @keyframes fireworkAnimation {
+      0% { opacity: 1; transform: scale(0.1) translate(0, 0); }
+      100% { opacity: 0; transform: scale(1.5) translate(50px, -50px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="sky">
+    <div class="rocket">
+      <div class="rocket-top"></div>
+      <div class="rocket-body"></div>
+      <div class="trail"></div>
+    </div>
+    <div class="explosion" id="explosion">💥</div>
+    <div class="diwali-message" id="diwaliMessage">
+      <h1>Happy Diwali to Everyone!</h1>
+      <p>Celebrate the Festival of Lights with joy, warmth, and love! May your life be filled with endless happiness and new opportunities. Happy Diwali!</p>
+    </div>
+  </div>
+
+  <!-- jQuery & Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      // Rocket launch and explosion effect
+      setTimeout(function () {
+        $('.rocket').fadeOut();
+        $('#explosion').fadeIn().css({
+          top: '30%',
+          left: '50%',
+          fontSize: '5rem'
+        }).addClass('explosion').fadeOut(2000);
+
+        // Fireworks explosions across the screen
+        for (let i = 0; i < 20; i++) {
+          let firework = $('<div class="fireworks"></div>');
+          firework.css({
+            left: Math.random() * 100 + 'vw',
+            top: Math.random() * 30 + 'vh',
+            backgroundColor: ['#ffdd57', '#ff5757', '#57ff57'][Math.floor(Math.random() * 3)],
+          });
+          $('.sky').append(firework);
+          setTimeout(() => { firework.remove(); }, 1500);
+        }
+
+        // Show Diwali message
+        setTimeout(function () {
+          $('#diwaliMessage').fadeIn();
+        }, 1000);
+      }, 3000);
+
+      // Sparkle effect throughout the screen
+      for (let i = 0; i < 50; i++) {
+        let sparkle = $('<div class="sparkle">✨</div>');
+        sparkle.css({
+          top: Math.random() * 100 + 'vh',
+          left: Math.random() * 100 + 'vw',
+          animationDelay: (Math.random() * 2) + 's'
+        });
+        $('body').append(sparkle);
+      }
+    });
+  </script>
+</body>
+</html>
